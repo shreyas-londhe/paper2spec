@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+r"""
 LaTeX macro expander for paper2spec.
 
 Parses \newcommand, \def, \DeclareMathOperator from a .tex preamble,

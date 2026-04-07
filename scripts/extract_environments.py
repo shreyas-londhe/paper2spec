@@ -53,7 +53,7 @@ TRACKED_ENVS = {
 
 
 def extract_cross_refs(text: str) -> list[str]:
-    """Extract all \cref, \ref, \eqref labels from text."""
+    r"""Extract all \cref, \ref, \eqref labels from text."""
     refs = []
     for pattern in [r'\\cref\{([^}]+)\}', r'\\ref\{([^}]+)\}', r'\\eqref\{([^}]+)\}']:
         for match in re.finditer(pattern, text):
