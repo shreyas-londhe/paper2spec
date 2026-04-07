@@ -12,14 +12,28 @@ Fix any discrepancies before finalizing.
 - `validation_report.md` — discrepancies found and resolved
 - Corrected spec sections (if needed)
 
+## When to skip
+
+If no reference implementations exist (e.g., the paper is very new), mark the spec as
+"**Unvalidated — no reference implementations found**" and skip this stage. This is
+acceptable for alpha specs.
+
 ## Process
 
 ### Step 1: Identify reference implementations
 
-Search for implementations of the protocol:
-- Official code linked in the paper
-- Well-known open-source implementations (e.g., winterfell, plonky2, lambdaworks for FRI)
-- Use `gh search repos` and `gh search code` to find implementations
+Search for implementations in this priority order:
+1. **Official code** linked in the paper (highest trust)
+2. **Well-known libraries** that implement the protocol family (e.g., winterfell, plonky2, lambdaworks for FRI)
+3. **Open-source projects** found via search:
+```bash
+gh search repos "{protocol_name}" --limit 10
+gh search code "{protocol_name} commit verify" --limit 10
+```
+
+If multiple implementations exist and disagree, **the paper is ground truth** — the spec
+should match the paper, not any particular implementation. Note disagreements in the
+ambiguity register.
 
 ### Step 2: Validate protocol structure
 

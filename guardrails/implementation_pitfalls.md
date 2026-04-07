@@ -5,19 +5,16 @@ flag these where relevant.
 
 ## 1. Off-by-One in Degree Bounds
 
-**Mistake**: Starting with degree `d`, after one FRI fold the degree should be `floor((d-1)/2)`, not `d/2`.
+**Mistake**: Getting the degree reduction wrong after folding or quotienting.
+
+**The rules** (context-dependent — always check the paper):
+- **FRI fold only** (no quotienting): degree $< d$ becomes degree $< \lfloor d/2 \rfloor$. Some papers use $\lfloor (d-1)/2 \rfloor$ — the difference depends on whether the degree bound is strict ($< d$) or non-strict ($\leq d$). Follow the paper.
+- **QUOTIENT then fold** (DEEP-FRI style): QUOTIENT subtracts 1, fold halves. So degree $< d$ → after quotient: $< d - 1$ → after fold: $< (d-1)/2$.
+- **Fold then QUOTIENT** (less common): fold halves, QUOTIENT subtracts 1. So degree $< d$ → after fold: $< d/2$ → after quotient: $< d/2 - 1$.
 
 **Why it matters**: If the verifier expects the wrong degree, it either rejects honest provers or accepts cheating ones.
 
-**In the spec**: Provide an explicit degree table:
-```
-Round 0: degree < d^(0)
-Round 1: degree < floor((d^(0) - 1) / 2)
-...or for DEEP-FRI with quotienting:
-Round 0: degree < d^(0)
-After quotient: degree < d^(0) - 1
-After fold: degree < floor((d^(0) - 2) / 2)
-```
+**In the spec**: Always provide an explicit degree table showing the bound at each step. If the paper is ambiguous about strict vs non-strict bounds, flag it in the ambiguity register.
 
 ## 2. Forgetting to Absorb Merkle Roots
 

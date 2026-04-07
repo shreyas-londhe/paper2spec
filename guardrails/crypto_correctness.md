@@ -55,6 +55,8 @@ compiles but is cryptographically unsound.
 - What is the coset shift (if any)?
 - How do cosets chain across rounds?
 
+**If the paper doesn't specify**: assume cosets (more general, safer). Document the assumption in the ambiguity register. Most production implementations use cosets.
+
 ## 6. Two-to-One Map Consistency
 
 **Rule**: The folding/hash function H_x requires that for each point in L^(i+1), there are exactly 2 preimages in L^(i).
