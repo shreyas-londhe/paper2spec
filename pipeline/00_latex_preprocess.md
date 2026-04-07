@@ -28,9 +28,9 @@ curl -sL "https://arxiv.org/e-print/{ARXIV_ID}" -o .paper2spec_work/{PAPER_ID}/s
 cd .paper2spec_work/{PAPER_ID} && tar xzf source.tar.gz
 ```
 
-Find the main `.tex` file — the one containing `\begin{document}`:
+Find the main `.tex` file (search recursively — tarballs may have subdirectories):
 ```bash
-grep -rl '\\begin{document}' .paper2spec_work/{PAPER_ID}/*.tex
+grep -rl '\\begin{document}' .paper2spec_work/{PAPER_ID} --include="*.tex"
 ```
 If multiple files match, the one with `\title{}` is usually the main file.
 If the source is a single file (not a tarball), it was served as a `.tex` directly.

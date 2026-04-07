@@ -48,10 +48,10 @@ file "${WORK}/source.tar.gz" | grep -q "gzip"
 ```
 If it's NOT gzip (some arXiv papers serve raw PDF), inform the user: "This paper has no LaTeX source on arXiv. Please provide the `.tex` file directly or accept lossy PDF extraction."
 
-Unpack and find the main `.tex` file:
+Unpack and find the main `.tex` file (search recursively — arXiv tarballs may have subdirectories):
 ```bash
 cd "${WORK}" && tar xzf source.tar.gz
-TEX_FILE=$(grep -rl '\\begin{document}' "${WORK}"/*.tex 2>/dev/null | head -1)
+TEX_FILE=$(grep -rl '\\begin{document}' "${WORK}" --include="*.tex" 2>/dev/null | head -1)
 ```
 If multiple `.tex` files contain `\begin{document}`, prefer the one with `\title{}`.
 If none found, check for a single `.tex` file and use that.
@@ -63,8 +63,8 @@ If none found, check for a single `.tex` file and use that.
 
 ### If local .tex file:
 ```bash
-TEX_FILE="${PAPER_SOURCE}"
-cp "${TEX_FILE}" "${WORK}/"
+cp "${PAPER_SOURCE}" "${WORK}/main.tex"
+TEX_FILE="${WORK}/main.tex"
 ```
 
 At this point, `TEX_FILE` must be set to the path of the main `.tex` file. If it is not set, STOP and ask the user for help.

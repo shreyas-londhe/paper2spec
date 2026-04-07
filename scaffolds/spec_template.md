@@ -74,7 +74,7 @@ Why sound: {{SOUNDNESS_REASON}}
 
 {{END_FOR_EACH_PROTOCOL}}
 
-## {{N-2}}. Soundness Bounds
+## {{NEXT}}. Soundness Bounds
 
 {{SOUNDNESS_SECTION}}
 
@@ -82,10 +82,14 @@ Why sound: {{SOUNDNESS_REASON}}
 
 {{PARAMETER_TABLE}}
 
-## {{N-1}}. Fiat-Shamir Transcript Schedule
+## {{NEXT+1}}. Fiat-Shamir Transcript Schedule
 
 See `fiat-shamir-transcript.md` for the complete schedule.
+<!-- For simple single-protocol specs, the transcript schedule may be inlined here instead. -->
 
-## {{N}}. Ambiguity Register
+## {{NEXT+2}}. Ambiguity Register
 
 See `ambiguity-register.md` for all unspecified implementation choices.
+<!-- For simple specs with few ambiguities, the register may be inlined here instead. -->
+
+<!-- Section numbering: 0=Algebraic Setting, 1=Primitives, 2..N=Protocols, NEXT=Soundness, NEXT+1=Fiat-Shamir, NEXT+2=Ambiguity -->
