@@ -79,7 +79,13 @@ def build_dependency_graph(data: dict) -> dict:
                 'to_type': nodes.get(target, {}).get('type', '?'),
             })
 
-    # Compute protocol dependency chains
+    # Pre-build label -> cross_refs index for O(1) lookup
+    label_to_refs = {}
+    for env in data['environments']:
+        if env['label']:
+            label_to_refs[env['label']] = env['cross_refs']
+
+    # Compute protocol dependency chains (transitive closure)
     protocol_deps = {}
     for env in data['environments']:
         if env['env_type'] == 'protocol' and env['label']:
@@ -92,10 +98,9 @@ def build_dependency_graph(data: dict) -> dict:
                     continue
                 visited.add(ref)
                 deps.add(ref)
-                # Follow transitive deps
-                for env2 in data['environments']:
-                    if env2['label'] == ref:
-                        stack.extend(env2['cross_refs'])
+                # Follow transitive deps via index (O(1) per lookup)
+                if ref in label_to_refs:
+                    stack.extend(label_to_refs[ref])
             protocol_deps[env['label']] = sorted(deps)
 
     # Topological ordering (simple: sort by line number)

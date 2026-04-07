@@ -163,6 +163,7 @@ def extract_sections(tex_content: str) -> list[Section]:
                 # Check for label on same or next line
                 label = None
                 label_match = re.search(r'\\label\{([^}]+)\}', line)
+                # i is 1-indexed, so lines[i] is the next line; valid when i < len(lines)
                 if not label_match and i < len(lines):
                     label_match = re.search(r'\\label\{([^}]+)\}', lines[i])
                 if label_match:

@@ -48,6 +48,9 @@ def parse_braced(text: str, pos: int) -> tuple[str, int]:
         elif text[i] == '}' and (i == 0 or text[i-1] != '\\'):
             depth -= 1
         i += 1
+    if depth > 0:
+        print(f"WARNING: Unbalanced braces starting at position {pos}, "
+              f"depth {depth} remaining", file=sys.stderr)
     return text[start:i-1], i
 
 
@@ -227,6 +230,11 @@ def iterative_expand(text: str, macros: dict[str, Macro], max_passes: int = 20) 
             text = expand_single_macro(text, name, macros[name])
         if text == prev:
             break
+    else:
+        # Loop completed without convergence
+        if text != prev:
+            print(f"WARNING: Macros did not fully converge after {max_passes} passes. "
+                  f"Some macros may remain unexpanded.", file=sys.stderr)
     return text
 
 
