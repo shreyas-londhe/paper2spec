@@ -1,0 +1,16 @@
+# Downloaded papers (fetched at invocation time)
+test_papers/
+
+# Working directory (created during skill execution)
+.paper2spec_work/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+
+# Editor
+*.swp
+*.swo
